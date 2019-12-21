@@ -1,9 +1,8 @@
 import UIKit
-
 import Architecture
 import PrimeModal
 import Counter
-
+import FavoritePrimes
 import RxCocoa
 
 
@@ -11,6 +10,7 @@ func rootViewController() -> UIViewController {
   Logging.URLRequests = { _ in return false }
 //  return primeModalViewController()
 //  return counterViewController()
+//  return favoritePrimesViewController()
 
   return UINavigationController(rootViewController: appFlowViewController())
 }
@@ -37,4 +37,10 @@ fileprivate func counterViewController() -> CounterViewController {
   )
   let store = Store(initialValue: state, reducer: counterViewReducer)
   return CounterViewController(store: store)
+}
+
+fileprivate func favoritePrimesViewController() -> FavoritePrimesViewController {
+  let state = FavoritePrimesState(favoritePrimes: [2, 3, 5])
+  let store = Store(initialValue: state, reducer: favoritePrimesReducer)
+  return FavoritePrimesViewController(store: store)
 }

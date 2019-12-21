@@ -8,8 +8,12 @@ extension CounterEnvironment {
   public static let live = CounterEnvironment(nthPrime: nthPrime(_:))
 }
 
+#if DEBUG
 extension CounterEnvironment {
-  static let mock = CounterEnvironment { _ in .sync { 17 } }
+  static let mock = CounterEnvironment.init { _ in
+    return Effect.error(NSError.init(domain: "domain", code: 1, userInfo: nil)).eraseToEffect()
+  }
 }
+#endif
 
 var Current = CounterEnvironment.live

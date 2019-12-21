@@ -52,14 +52,10 @@ public func counterReducer(state: inout CounterState, action: CounterAction) -> 
     state.isNthPrimeButtonDisabled = false
 
     switch result {
-    case let .success(value):
-      state.primeAlert = PrimeAlert(prime: value)
+    case let .success(prime):
+      state.primeAlert = PrimeAlert(title: "Prime", message: "The \(ordinal(state.count)) prime is \(prime)")
     case let .failure(error):
-      return [
-        Effect.fireAndForget {
-          print("Ignoring error: \(error)")
-        }
-      ]
+      state.primeAlert = PrimeAlert(title: "Error", message: error.localizedDescription)
     }
   case .nthPrimeAlertDismissed:
     state.primeAlert = nil
@@ -86,4 +82,14 @@ public func == (lhs: CounterAction, rhs: CounterAction) -> Bool {
     return lhsValue == rhsValue
   default: return false
   }
+}
+
+fileprivate let numberFormatter: NumberFormatter = {
+  let formatter = NumberFormatter()
+  formatter.numberStyle = .ordinal
+  return formatter
+}()
+
+func ordinal(_ n: Int) -> String {
+  return numberFormatter.string(for: n) ?? ""
 }

@@ -3,5 +3,6 @@
     <pages>
         <page name='Counter'/>
         <page name='PrimeModal'/>
+        <page name='FavoritePrimes'/>
     </pages>
 </playground>

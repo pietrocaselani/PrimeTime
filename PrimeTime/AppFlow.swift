@@ -1,5 +1,6 @@
 import Architecture
 import Counter
+import FavoritePrimes
 
 struct AppState {
   var count: Int
@@ -28,10 +29,16 @@ struct AppState {
       alertNthPrime = newValue.alertNthPrime
     }
   }
+
+  var favoritePrimesState: FavoritePrimesState {
+    get { FavoritePrimesState(favoritePrimes: favoritePrimes) }
+    set { favoritePrimes = newValue.favoritePrimes }
+  }
 }
 
 enum AppAction {
   case counterView(CounterViewAction)
+  case favoritePrimes(FavoritePrimesAction)
 
   var counterView: CounterViewAction? {
     get {
@@ -43,8 +50,22 @@ enum AppAction {
       self = .counterView(newValue)
     }
   }
+
+  var favoritePrimes: FavoritePrimesAction? {
+    get {
+      guard case let .favoritePrimes(action) = self else { return nil }
+      return action
+    }
+    set {
+      guard case .favoritePrimes = self, let newValue = newValue else { return }
+      self = .favoritePrimes(newValue)
+    }
+  }
 }
 
 let appReducer = logging(
-  pullback(counterViewReducer, value: \AppState.counterViewState, action: \AppAction.counterView)
+  combine(
+    pullback(counterViewReducer, value: \AppState.counterViewState, action: \AppAction.counterView),
+    pullback(favoritePrimesReducer, value: \AppState.favoritePrimesState, action: \AppAction.favoritePrimes)
+  )
 )

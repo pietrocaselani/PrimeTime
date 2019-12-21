@@ -1,7 +1,7 @@
 import Architecture
 import RxCocoa
 import RxSwift
-
+import FavoritePrimes
 import Counter
 
 final class AppFlowViewController: ViewController<AppFlowView> {
@@ -24,6 +24,22 @@ final class AppFlowViewController: ViewController<AppFlowView> {
       .subscribe(onNext: { [weak self] _ in
         self?.goToCounter()
       }).disposed(by: disposeBag)
+
+    typedView.favoritePrimesButton.rx.tap
+    .subscribe(onNext: { [weak self] _ in
+      self?.goToFavoritePrimes()
+    }).disposed(by: disposeBag)
+  }
+
+  private func goToFavoritePrimes() {
+    let favoritePrimesStore = store.view(
+      value: { $0.favoritePrimesState },
+      action: { .favoritePrimes($0) }
+    )
+
+    let counterViewController = FavoritePrimesViewController(store: favoritePrimesStore)
+
+    self.navigationController?.pushViewController(counterViewController, animated: true)
   }
 
   private func goToCounter() {

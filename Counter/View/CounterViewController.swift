@@ -8,11 +8,8 @@ public final class CounterViewController: ViewController<CounterView> {
   private let disposeBag = DisposeBag()
   private let store: Store<CounterViewState, CounterViewAction>
 
-  private let numberFormatter = NumberFormatter()
-
   public init(store: Store<CounterViewState, CounterViewAction>) {
     self.store = store
-    self.numberFormatter.numberStyle = .ordinal
     super.init(nibName: nil, bundle: nil)
   }
 
@@ -71,8 +68,8 @@ public final class CounterViewController: ViewController<CounterView> {
       present(primeModalViewController, animated: true, completion: nil)
     } else if let alert = state.alertNthPrime {
       let alertController = UIAlertController(
-        title: "Prime",
-        message: "The \(ordinal(state.count)) prime is \(alert.prime)",
+        title: alert.title,
+        message: alert.message,
         preferredStyle: .alert
       )
 
@@ -82,10 +79,6 @@ public final class CounterViewController: ViewController<CounterView> {
 
       present(alertController, animated: true, completion: nil)
     }
-  }
-
-  private func ordinal(_ n: Int) -> String {
-    return numberFormatter.string(for: n) ?? ""
   }
 }
 

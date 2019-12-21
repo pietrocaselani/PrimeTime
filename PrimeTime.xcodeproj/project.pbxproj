@@ -54,6 +54,9 @@
 		82704F1323AE7C7F0003F080 /* AppFlowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82704F1223AE7C7F0003F080 /* AppFlowViewController.swift */; };
 		82704F1523AE7C880003F080 /* AppFlowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82704F1423AE7C880003F080 /* AppFlowView.swift */; };
 		82704F1723AE7D720003F080 /* AppFlow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82704F1623AE7D720003F080 /* AppFlow.swift */; };
+		82704F1923AEBB130003F080 /* FavoritePrimes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82704F1823AEBB130003F080 /* FavoritePrimes.swift */; };
+		82704F1C23AEBFB00003F080 /* FavoritePrimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82704F1B23AEBFB00003F080 /* FavoritePrimesView.swift */; };
+		82704F1E23AEC02E0003F080 /* FavoritePrimesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82704F1D23AEC02E0003F080 /* FavoritePrimesViewController.swift */; };
 		A56C49BB3975E9C582263F2E /* Pods_PrimeTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 36DD56717F005B6B312197D7 /* Pods_PrimeTime.framework */; };
 		AEA0BB1836157DE84914C480 /* Pods_FavoritePrimes_FavoritePrimesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BC7D41C7A221C749FE9A441 /* Pods_FavoritePrimes_FavoritePrimesTests.framework */; };
 		B2E014420AD1E0BB101933C2 /* Pods_Counter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E449B3C4A1D8BA94B1ADCF6 /* Pods_Counter.framework */; };
@@ -241,6 +244,9 @@
 		82704F1223AE7C7F0003F080 /* AppFlowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowViewController.swift; sourceTree = "<group>"; };
 		82704F1423AE7C880003F080 /* AppFlowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowView.swift; sourceTree = "<group>"; };
 		82704F1623AE7D720003F080 /* AppFlow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlow.swift; sourceTree = "<group>"; };
+		82704F1823AEBB130003F080 /* FavoritePrimes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePrimes.swift; sourceTree = "<group>"; };
+		82704F1B23AEBFB00003F080 /* FavoritePrimesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePrimesView.swift; sourceTree = "<group>"; };
+		82704F1D23AEC02E0003F080 /* FavoritePrimesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoritePrimesViewController.swift; sourceTree = "<group>"; };
 		8324DA23F69D3EA2F3D659CD /* Pods-FavoritePrimes-FavoritePrimesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FavoritePrimes-FavoritePrimesTests.release.xcconfig"; path = "Target Support Files/Pods-FavoritePrimes-FavoritePrimesTests/Pods-FavoritePrimes-FavoritePrimesTests.release.xcconfig"; sourceTree = "<group>"; };
 		843F4521926CCD5E502C76A3 /* Pods-Counter.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Counter.release.xcconfig"; path = "Target Support Files/Pods-Counter/Pods-Counter.release.xcconfig"; sourceTree = "<group>"; };
 		9373E3A4FA4E34D6C2728753 /* Pods-Counter-CounterTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Counter-CounterTests.release.xcconfig"; path = "Target Support Files/Pods-Counter-CounterTests/Pods-Counter-CounterTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -483,11 +489,11 @@
 			children = (
 				8250B50E23AE297700E8DE4E /* Counter.h */,
 				823A7A1A23AE512500840D15 /* Counter.swift */,
-				8250B50F23AE297700E8DE4E /* Info.plist */,
-				8250B53923AE2C4C00E8DE4E /* View */,
 				82704F0A23AE727F0003F080 /* CounterEnvironment.swift */,
-				82704F0C23AE72D30003F080 /* WolframAlpha.swift */,
+				8250B50F23AE297700E8DE4E /* Info.plist */,
 				82704F1023AE77D30003F080 /* PrimeAlert.swift */,
+				8250B53923AE2C4C00E8DE4E /* View */,
+				82704F0C23AE72D30003F080 /* WolframAlpha.swift */,
 			);
 			path = Counter;
 			sourceTree = "<group>";
@@ -516,7 +522,9 @@
 			isa = PBXGroup;
 			children = (
 				82704EEF23AE71350003F080 /* FavoritePrimes.h */,
+				82704F1823AEBB130003F080 /* FavoritePrimes.swift */,
 				82704EF023AE71350003F080 /* Info.plist */,
+				82704F1A23AEBFA90003F080 /* View */,
 			);
 			path = FavoritePrimes;
 			sourceTree = "<group>";
@@ -528,6 +536,15 @@
 				82704EFE23AE71350003F080 /* Info.plist */,
 			);
 			path = FavoritePrimesTests;
+			sourceTree = "<group>";
+		};
+		82704F1A23AEBFA90003F080 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				82704F1B23AEBFB00003F080 /* FavoritePrimesView.swift */,
+				82704F1D23AEC02E0003F080 /* FavoritePrimesViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		C3D003020B5F5B7E29A07C07 /* Pods */ = {
@@ -836,6 +853,7 @@
 					};
 					82704EEC23AE71350003F080 = {
 						CreatedOnToolsVersion = 11.2.1;
+						LastSwiftMigration = 1120;
 					};
 					82704EF423AE71350003F080 = {
 						CreatedOnToolsVersion = 11.2.1;
@@ -1317,6 +1335,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				82704F1C23AEBFB00003F080 /* FavoritePrimesView.swift in Sources */,
+				82704F1E23AEC02E0003F080 /* FavoritePrimesViewController.swift in Sources */,
+				82704F1923AEBB130003F080 /* FavoritePrimes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1921,6 +1942,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4D19CBE193867FDECED249F2 /* Pods-FavoritePrimes.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -1940,6 +1962,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1951,6 +1974,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = EEDE81783F6100F0E8AABEEC /* Pods-FavoritePrimes.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;

@@ -2,7 +2,6 @@ import UIKit
 import PlaygroundSupport
 
 import Architecture
-
 import Counter
 
 let initialValue = CounterViewState(count: 0, isPrimeModalShown: false, favoritePrimes: [2, 3])
