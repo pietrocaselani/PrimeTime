@@ -1,7 +1,7 @@
 import Architecture
 
 public struct CounterEnvironment {
-  var nthPrime: (Int) -> Effect<Int>
+  public var nthPrime: (Int) -> Effect<Int>
 }
 
 extension CounterEnvironment {
@@ -14,6 +14,10 @@ extension CounterEnvironment {
     return Effect.error(NSError.init(domain: "domain", code: 1, userInfo: nil)).eraseToEffect()
   }
 }
-#endif
 
-var Current = CounterEnvironment.live
+public var Current = CounterEnvironment.live
+
+#else
+
+public let Current = CounterEnvironment.live
+#endif
