@@ -1,26 +1,38 @@
 import XCTest
+import ArchitectureTestable
 @testable import Counter
 
-class CounterTests: XCTestCase {
-
-  override func setUp() {
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+final class CounterTests: XCTestCase {
+  func testIncrDecrButtonTapped() {
+    assert(initialValue: CounterViewState(),
+           reducer: counterViewReducer,
+           steps:
+      Step(.send, .counter(.incrTapped)) { $0.count = 1 },
+           Step(.send, .counter(.incrTapped)) { $0.count = 2 },
+           Step(.send, .counter(.decrTapped)) { $0.count = 1 }
+    )
   }
 
-  override func tearDown() {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-  }
+  func testNthPrimeButtonHappyFlow() {
+    Current.nthPrime = { _ in .sync { 17 } }
 
-  func testExample() {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+    assert(
+      initialValue: CounterViewState(
+        isNthPrimeButtonDisabled: false,
+        alertNthPrime: nil
+      ),
+      reducer: counterViewReducer,
+      steps:
+      Step(.send, .counter(.nthPrimeButtonTapped)) {
+        $0.isNthPrimeButtonDisabled = true
+      },
+      Step(.receive, .counter(.nthPrimeResponse(17))) {
+        $0.alertNthPrime = PrimeAlert(prime: 17)
+        $0.isNthPrimeButtonDisabled = false
+      },
+      Step(.send, .counter(.alertDismissButtonTapped)) {
+        $0.alertNthPrime = nil
+      }
+    )
   }
-  
-  func testPerformanceExample() {
-    // This is an example of a performance test case.
-    self.measure {
-      // Put the code you want to measure the time of here.
-    }
-  }
-
 }

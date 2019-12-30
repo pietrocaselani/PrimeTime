@@ -1,20 +1,19 @@
 import PrimeModal
 
-public struct CounterViewState {
+public struct CounterViewState: Equatable {
   public var count: Int
   public var favoritePrimes: [Int]
   public var isPrimeModalShown: Bool
   public var isNthPrimeButtonDisabled: Bool
   public var alertNthPrime: PrimeAlert?
 
-  public static let initial = CounterViewState(count: 0, isPrimeModalShown: false,
-                                               isNthPrimeButtonDisabled: false, favoritePrimes: [], alertNthPrime: nil)
+  public static let initial = CounterViewState()
 
-  public init(count: Int,
-              isPrimeModalShown: Bool,
-              isNthPrimeButtonDisabled: Bool,
-              favoritePrimes: [Int],
-              alertNthPrime: PrimeAlert?) {
+  public init(count: Int = 0,
+              isPrimeModalShown: Bool = false,
+              isNthPrimeButtonDisabled: Bool = false,
+              favoritePrimes: [Int] = [],
+              alertNthPrime: PrimeAlert? = nil) {
     self.count = count
     self.isPrimeModalShown = isPrimeModalShown
     self.favoritePrimes = favoritePrimes

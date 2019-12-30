@@ -23,6 +23,12 @@ target 'Architecture' do
   end
 end
 
+target 'ArchitectureTestable' do
+  use_frameworks!
+
+  arch_pods
+end
+
 target 'Counter' do
   use_frameworks!
 
