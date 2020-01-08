@@ -25,17 +25,19 @@ public final class FavoritePrimesViewController: ViewController<FavoritePrimesVi
   }
 
   private func subscribeToInputs() {
-    let primesObservable = store.value.map { $0.favoritePrimes }.asObservable()
+    store.value.favoritePrimes // ???
 
-    primesObservable.bind(to: typedView.tableView.rx.items(cellIdentifier: "PrimeCell")) { (index, prime, cell) in
-      cell.textLabel?.text = "\(prime)"
-    }.disposed(by: disposeBag)
+//    let primesObservable = store.value.map { $0.favoritePrimes }.asObservable()
+
+//    primesObservable.bind(to: typedView.tableView.rx.items(cellIdentifier: "PrimeCell")) { (index, prime, cell) in
+//      cell.textLabel?.text = "\(prime)"
+//    }.disposed(by: disposeBag)
   }
 
   private func subscribeToOutputs() {
-    typedView.tableView.rx.itemDeleted
-      .map(FavoritePrimesAction.deleteFavoritePrimes)
-      .subscribe(onNext: store.send)
-      .disposed(by: disposeBag)
+//    typedView.tableView.rx.itemDeleted
+//      .map(FavoritePrimesAction.deleteFavoritePrimes)
+//      .subscribe(onNext: store.send)
+//      .disposed(by: disposeBag)
   }
 }

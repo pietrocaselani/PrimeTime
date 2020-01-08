@@ -1,33 +1,36 @@
-import RxSwift
-import RxRelay
-import RxCocoa
+import Combine
 
 public typealias Reducer<Value, Action> = (inout Value, Action) -> [Effect<Action>]
 
-public final class Store<Value, Action> {
+public final class Store<Value, Action>: ObservableObject {
   private let reducer: Reducer<Value, Action>
-  private let valueSubject: BehaviorRelay<Value>
-
-  private var viewDisposable: Disposable?
-  private var effectDisposables = [Disposable]()
-
-  private let disposeBag = DisposeBag()
-
-  public lazy var value = self.valueSubject.asDriver()
+  @Published public private(set) var value: Value
+  private var viewCancellable: Cancellable?
+  private var effectCancellables: Set<AnyCancellable> = []
 
   public init(initialValue: Value, reducer: @escaping Reducer<Value, Action>) {
-    self.valueSubject = BehaviorRelay(value: initialValue)
+    self.value = initialValue
     self.reducer = reducer
   }
 
   public func send(_ action: Action) {
-    var value = valueSubject.value
     let effects = self.reducer(&value, action)
 
-    valueSubject.accept(value)
-
     effects.forEach { effect in
-      effect.subscribe(onNext: self.send).disposed(by: disposeBag)
+      var effectCancellable: AnyCancellable?
+      var didComplete = false
+
+      effectCancellable = effect.sink(
+        receiveCompletion: { [weak self] _ in
+          didComplete = true
+          guard let cancellable = effectCancellable else { return }
+          self?.effectCancellables.remove(cancellable)
+        },
+        receiveValue: self.send)
+
+      if !didComplete, let effectCancellable = effectCancellable {
+        self.effectCancellables.insert(effectCancellable)
+      }
     }
   }
 
@@ -36,16 +39,16 @@ public final class Store<Value, Action> {
     action toGlobalAction: @escaping (LocalAction) -> Action
   ) -> Store<LocalValue, LocalAction> {
     let localStore = Store<LocalValue, LocalAction>(
-      initialValue: toLocalValue(self.valueSubject.value),
+      initialValue: toLocalValue(self.value),
       reducer: { localValue, localAction in
         self.send(toGlobalAction(localAction))
-        localValue = toLocalValue(self.valueSubject.value)
+        localValue = toLocalValue(self.value)
         return []
     }
     )
 
-    localStore.viewDisposable = self.valueSubject.subscribe(onNext: { [weak localStore] newValue in
-      localStore?.valueSubject.accept(toLocalValue(newValue))
+    localStore.viewCancellable = self.$value.sink(receiveValue: { [weak localStore] newValue in
+      localStore?.value = toLocalValue(newValue)
     })
 
     return localStore

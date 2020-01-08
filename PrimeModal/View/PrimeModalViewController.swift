@@ -23,16 +23,16 @@ public final class PrimeModalViewController: ViewController<PrimeModalView> {
   }
 
   private func subscribeToInputs() {
-    store.value.drive(onNext: updateView(state:)).disposed(by: disposeBag)
+//    store.value.drive(onNext: updateView(state:)).disposed(by: disposeBag)
   }
 
   private func subscribeToOutputs() {
-    let buttonObservable = typedView.saveOrRemoveButton.rx.tap.asObservable()
-    let stateObservable = store.value.asObservable()
+//    let buttonObservable = typedView.saveOrRemoveButton.rx.tap.asObservable()
+//    let stateObservable = store.value.asObservable()
 
-    Observable.zip(buttonObservable, stateObservable)
-      .map { S.mapStateToAction($0.1) }
-      .subscribe(onNext: store.send).disposed(by: disposeBag)
+//    Observable.zip(buttonObservable, stateObservable)
+//      .map { S.mapStateToAction($0.1) }
+//      .subscribe(onNext: store.send).disposed(by: disposeBag)
   }
 
   private func updateView(state: PrimeModalState) {

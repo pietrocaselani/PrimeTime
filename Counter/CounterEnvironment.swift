@@ -1,4 +1,5 @@
 import Architecture
+import Combine
 
 public struct CounterEnvironment {
   public var nthPrime: (Int) -> Effect<Int>
@@ -11,7 +12,7 @@ extension CounterEnvironment {
 #if DEBUG
 extension CounterEnvironment {
   static let mock = CounterEnvironment.init { _ in
-    return Effect.error(NSError.init(domain: "domain", code: 1, userInfo: nil)).eraseToEffect()
+    Fail.init(error: NSError(domain: "domain", code: 1, userInfo: nil))
   }
 }
 

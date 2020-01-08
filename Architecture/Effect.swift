@@ -1,34 +1,35 @@
-import RxSwift
+import Combine
 
-public struct Effect<Element>: ObservableType {
-  private let observable: Observable<Element>
+public struct Effect<Output>: Publisher {
+  public typealias Failure = Never
+  private let publisher: AnyPublisher<Output, Failure>
 
-  public init(_ observable: Observable<Element>) {
-    self.observable = observable
+  public init(_ publisher: AnyPublisher<Output, Failure>) {
+    self.publisher = publisher
   }
 
-  public func subscribe<Observer>(_ observer: Observer) -> Disposable where Observer : ObserverType, Effect.Element == Observer.Element {
-    return observable.subscribe(observer)
+  public func receive<S>(subscriber: S) where S : Subscriber, Failure == S.Failure, Output == S.Input {
+    self.publisher.receive(subscriber: subscriber)
   }
 }
 
 extension Effect {
   public static func fireAndForget(work: @escaping () -> Void) -> Effect {
-    return Observable<Element>.deferred { () -> Observable<Element> in
+    return Deferred { () -> Empty<Output, Never> in
       work()
-      return Observable.empty()
+      return Empty(completeImmediately: true)
     }.eraseToEffect()
   }
 
-  public static func sync(work: @escaping () -> Element) -> Effect {
-    return Observable.deferred {
-      Observable.just(work())
+  public static func sync(work: @escaping () -> Output) -> Effect {
+    return Deferred {
+      Just(work())
     }.eraseToEffect()
   }
 }
 
-extension ObservableType {
-  public func eraseToEffect() -> Effect<Element> {
-    return Effect(self.asObservable())
+extension Publisher where Failure == Never {
+  public func eraseToEffect() -> Effect<Output> {
+    return Effect(self.eraseToAnyPublisher())
   }
 }
