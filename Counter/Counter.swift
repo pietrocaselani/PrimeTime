@@ -65,8 +65,8 @@ public func counterReducer(state: inout CounterState, action: CounterAction) -> 
 }
 
 public let counterViewReducer = combine(
-  pullback(counterReducer, value: \CounterViewState.counter, action: \CounterViewAction.counter),
-  pullback(primeModalReducer, value: \CounterViewState.primeModal, action: \CounterViewAction.primeModal)
+  pullback(counterReducer, value: \CounterViewState.counter, action: /CounterViewAction.counter),
+  pullback(primeModalReducer, value: \CounterViewState.primeModal, action: /CounterViewAction.primeModal)
 )
 
 public func == (lhs: CounterAction, rhs: CounterAction) -> Bool {

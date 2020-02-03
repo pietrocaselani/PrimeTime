@@ -65,7 +65,7 @@ enum AppAction {
 
 let appReducer = logging(
   combine(
-    pullback(counterViewReducer, value: \AppState.counterViewState, action: \AppAction.counterView),
-    pullback(favoritePrimesReducer, value: \AppState.favoritePrimesState, action: \AppAction.favoritePrimes)
+    pullback(counterViewReducer, value: \AppState.counterViewState, action: /AppAction.counterView),
+    pullback(favoritePrimesReducer, value: \AppState.favoritePrimesState, action: /AppAction.favoritePrimes)
   )
 )
